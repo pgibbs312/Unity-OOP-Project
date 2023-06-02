@@ -6,6 +6,7 @@ public class MeleeEnemy : Enemy
 {
     [SerializeField] float attackRange;
     [SerializeField] float attackTime;
+    [SerializeField] float damage;
     private float timer = 0;
 
     public void SetMeleeEnemy(float _attackRange, float _attackTime)
@@ -44,7 +45,7 @@ public class MeleeEnemy : Enemy
         } else 
         {
             timer = 0;
-            target.GetComponent<IDamageable>().GetDamage(0);
+            target.GetComponent<IDamageable>().GetDamage(damage);
         }
     }
 }
