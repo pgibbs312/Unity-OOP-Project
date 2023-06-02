@@ -24,6 +24,8 @@ public class Player : PlayableObject
         weapon = new Weapon("Player Weapon", weaponDamage, bulletSpeed);
 
         //OnHealthUpdate?.Invoke(health.GetHealth());
+
+        cam = Camera.main;
     }
 
     private void Update()
