@@ -7,7 +7,7 @@ public class Enemy : PlayableObject
 {
     //private float speed;
     private EnemyType enemyType;
-
+    public GameObject explosion;
     protected Transform target;
     [SerializeField] protected float speed; // private are local to the script, protected are local to the script, but can become avaible to any other scripts that are inherited from the class
 
@@ -61,6 +61,7 @@ public class Enemy : PlayableObject
     public override void Die()
     {
         Debug.Log("Enemy Died");
+        Instantiate(explosion, transform.position, Quaternion.identity);
         GameManager.GetInstance().NotifyDeath(this);
         Destroy(gameObject);
     }
