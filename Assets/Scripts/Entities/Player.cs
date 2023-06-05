@@ -14,6 +14,7 @@ public class Player : PlayableObject
     [SerializeField] Bullet bulletprefab;
     private Rigidbody2D playerRB;
     public Action OnDeath;
+    public HealthPickup healthPickup;
     
     // public Action<float> OnHealthUpdate;
     private void Awake()
@@ -74,4 +75,5 @@ public class Player : PlayableObject
             Die();
         }
     }
+    
 }
