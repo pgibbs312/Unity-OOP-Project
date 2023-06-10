@@ -14,6 +14,11 @@ public class Player : PlayableObject
     [SerializeField] Bullet bulletprefab;
     private Rigidbody2D playerRB;
     public Action OnDeath;
+
+    public int maxHealth = 100;
+    public float currentHealth;
+
+    public HealthBar healthBar;
     
     // public Action<float> OnHealthUpdate;
     private void Awake()
@@ -28,7 +33,7 @@ public class Player : PlayableObject
         cam = Camera.main;
 
         currentHealth = maxHealth;
-        healthBar.SetMaxHealth(maxHealth);
+        HealthBar.SetMaxHealth(maxHealth);
     }
 
     private void Update()

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -43,6 +44,11 @@ public class HealthBar : MonoBehaviour
         followCameraRotation.enabled = isBillboarded;
     }
 
+    internal static void SetMaxHealth(int maxHealth)
+    {
+        throw new NotImplementedException();
+    }
+
     private void ChangeHealthFill(CurrentHealth currentHealth)
     {
         if (!healthSystem.HasAnimationWhenHealthChanges) return;
@@ -70,5 +76,10 @@ public class HealthBar : MonoBehaviour
 
         this.leftoverAmount = 0;
         image.fillAmount = finalValue;
+    }
+
+    internal void SetHealth(float currentHealth)
+    {
+        throw new NotImplementedException();
     }
 }
