@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour
     
     [SerializeField] GameObject menuCanvas;
     [SerializeField] GameObject lblGameOverText;
+    [SerializeField] GameObject startbutton;
     private ScoreManager scoreManager;
     // Start is called before the first frame update
     void Start()
@@ -51,6 +52,7 @@ public class UIManager : MonoBehaviour
     
     public void GameStarted()
     {
+        startbutton.gameObject.SetActive(false);
         txtScore.SetText("0");
         player = GameManager.GetInstance().GetPlayer();
         player.health.OnHealthUpdate += UpdateHealth;

@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
     public Action OnGameEnd;
 
     bool isPlaying;
+
+    
     void Awake()
     {
         SetSingleton();
@@ -32,7 +34,8 @@ public class GameManager : MonoBehaviour
     {
         isEnemySpawning = true;
         FindPlayer();
-        StartCoroutine(EnemySpawner());
+        //StartCoroutine(EnemySpawner());
+        //Start
     }
 
     // Update is called once per frame
@@ -67,22 +70,22 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void CreateEnemy()
-    {
-        tempEnemy = Instantiate(enemyPrefab);
-        tempEnemy.transform.position = spawnPositions[UnityEngine.Random.Range(0, spawnPositions.Length)].position;
-        tempEnemy.GetComponent<Enemy>().weapon = meleeWeapon;
-        tempEnemy.GetComponent<MeleeEnemy>().SetMeleeEnemy(2, 0.25f);
-    }
+    // void CreateEnemy()
+    // {
+    //     tempEnemy = Instantiate(enemyPrefab);
+    //     tempEnemy.transform.position = spawnPositions[UnityEngine.Random.Range(0, spawnPositions.Length)].position;
+    //     tempEnemy.GetComponent<Enemy>().weapon = meleeWeapon;
+    //     tempEnemy.GetComponent<MeleeEnemy>().SetMeleeEnemy(2, 0.25f);
+    // }
 
-    IEnumerator EnemySpawner()
-    {
-        while (isEnemySpawning)
-        {
-            yield return new WaitForSeconds(1.0f / enemySpawnRate);
-            CreateEnemy();
-        }
-    }
+    // IEnumerator EnemySpawner()
+    // {
+    //     while (isEnemySpawning)
+    //     {
+    //         yield return new WaitForSeconds(1.0f / enemySpawnRate);
+    //         CreateEnemy();
+    //     }
+    // }
 
     public void NotifyDeath(Enemy enemy)
     {
@@ -115,7 +118,7 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(2);
         isEnemySpawning = true;
-        StartCoroutine(EnemySpawner());
+        //StartCoroutine(EnemySpawner());
     }
 
     public void StopGame()
