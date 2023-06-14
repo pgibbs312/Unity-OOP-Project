@@ -15,7 +15,11 @@ public class Player : PlayableObject
     private Rigidbody2D playerRB;
     public Action OnDeath;
     public HealthPickup healthPickup;
-    
+
+    public AudioSource shootingAudioSource;
+    public AudioClip shootingSound; 
+
+
     // public Action<float> OnHealthUpdate;
     private void Awake()
     {
@@ -24,6 +28,7 @@ public class Player : PlayableObject
 
         weapon = new Weapon("Player Weapon", weaponDamage, bulletSpeed);
 
+        shootingAudioSource = GetComponent<AudioSource>();
         //OnHealthUpdate?.Invoke(health.GetHealth());
 
         cam = Camera.main;
@@ -50,6 +55,11 @@ public class Player : PlayableObject
     {
         Debug.Log("Shooting bullets towards direction");
         weapon.Shoot(bulletprefab, this, "Enemy");
+
+        if (shootingAudioSource && shootingSound)
+        {
+            shootingAudioSource.PlayOneShot(shootingSound);
+        }
     }
     public override void Die()
     {
