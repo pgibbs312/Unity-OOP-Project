@@ -24,7 +24,7 @@ public class Player : PlayableObject
     public int maxHealth = 100;
     public float currentHealth;
 
-    public HealthBar healthBar;
+    public HealthBarUI healthBar;
     
     // public Action<float> OnHealthUpdate;
     private void Awake()
