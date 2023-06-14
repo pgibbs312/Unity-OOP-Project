@@ -20,6 +20,12 @@ public class Player : PlayableObject
     public AudioClip shootingSound; 
 
 
+
+    public int maxHealth = 100;
+    public float currentHealth;
+
+    public HealthBar healthBar;
+    
     // public Action<float> OnHealthUpdate;
     private void Awake()
     {
@@ -32,6 +38,9 @@ public class Player : PlayableObject
         //OnHealthUpdate?.Invoke(health.GetHealth());
 
         cam = Camera.main;
+
+        currentHealth = maxHealth;
+        HealthBar.SetMaxHealth(maxHealth);
     }
 
     private void Update()
@@ -83,6 +92,10 @@ public class Player : PlayableObject
         {
             Die();
         }
+
+        //damage function using float
+        currentHealth -= damage;
+        healthBar.SetHealth(currentHealth);
+      
     }
-    
 }
