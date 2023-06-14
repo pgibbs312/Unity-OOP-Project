@@ -1,130 +1,101 @@
 using UnityEngine;
 
-public class BossEnemy : MonoBehaviour
+public class BossEnemy : Enemy
 {
-    public int maxHealth = 100;
-    public int maxShield = 100;
-    public float moveSpeed = 5f;
-    public float chargeSpeed = 10f;
-    public int shieldBreakThreshold = 0;
-    public int shieldRecovery = 10;
-    public float shieldRecoveryInterval = 5f;
+   
+    public float bossHealth = 100;
+
+    public float chargeDamage = 20;
     public float chargeInterval = 12f;
     public float chargeDuration = 3f;
-    public float shootInterval = 3f;
-    public int shootDamage = 2;
-    public int chargeDamage = 20;
-    public Transform player;
-    public GameObject bulletPrefab;
+    public float chargeSpeed = 10f;
 
-    private int currentHealth;
-    private int currentShield;
-    private float shieldRecoveryTimer;
-    private float chargeTimer;
-    private float shootTimer;
-    private bool isCharging;
+    public float bulletDamage = 2f;
+    public float bulletInterval = 3f;
+    public int bulletsPerShot = 2;
+    public float bulletSpeed = 10f;
 
-    private void Start()
+    public float timeSinceLastCharge = 0f;
+    public float timeSinceLastBullet = 0f;
+
+    public float laserDamage = 10f;
+    public float laserInterval = 5f;
+    public float laserDuration = 3f;
+    public float laserSpeed = 15f;
+    public GameObject laserPrefab;
+    public float timeSinceLastLaser = 0f;
+   
+
+    protected override void Start()
     {
-        currentHealth = maxHealth;
-        currentShield = maxShield;
-        shieldRecoveryTimer = shieldRecoveryInterval;
-        chargeTimer = chargeInterval;
-        shootTimer = shootInterval;
-        isCharging = false;
+        base.Start();
+        health = new Health(1, 0, 1);
     }
-
-    private void Update()
-    {
-        shieldRecoveryTimer -= Time.deltaTime;
-        chargeTimer -= Time.deltaTime;
-        shootTimer -= Time.deltaTime;
-
-        if (shieldRecoveryTimer <= 0f)
-        {
-            RecoverShield();
-            shieldRecoveryTimer = shieldRecoveryInterval;
-        }
-
-        if (chargeTimer <= 0f)
-        {
-            PerformChargeAttack();
-            chargeTimer = chargeInterval;
-        }
-
-        if (shootTimer <= 0f)
-        {
-            //Shoot();
-            shootTimer = shootInterval;
-        }
-
-        if (isCharging)
-        {
-            MoveTowardsPlayer();
-        }
-    }
-
-    private void MoveTowardsPlayer()
-    {
-        Vector3 direction = (player.position - transform.position).normalized;
-        transform.position += direction * chargeSpeed * Time.deltaTime;
-    }
-
     private void PerformChargeAttack()
     {
-        isCharging = true;
-        Invoke(nameof(StopChargeAttack), chargeDuration);
-    }
-
-    private void StopChargeAttack()
-    {
-        isCharging = false;
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (isCharging)
+        timeSinceLastCharge += Time.deltaTime;
+        if (timeSinceLastCharge >= chargeInterval)
         {
-            PlayerHealth playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
-            if (playerHealth != null)
-            {
-                playerHealth.TakeDamage(chargeDamage);
-            }
-            isCharging = false;
+            // Charge towards the player
+            Vector2 direction = target.position - transform.position;
+            direction.Normalize();
+            rb.velocity = direction * chargeSpeed;
+
+            Invoke(nameof(StopCharge), chargeDuration);
+            timeSinceLastCharge = 0f;
         }
     }
 
-    
-    private void RecoverShield()
+    private void StopCharge()
     {
-        currentShield = Mathf.Min(currentShield + shieldRecovery, maxShield);
+        rb.velocity = Vector2.zero;
     }
 
-    public void TakeDamage(int damage)
+    protected override void Update()
     {
-        if (currentShield > shieldBreakThreshold)
+        if (GameManager.GetInstance().IsPlaying())
         {
-            currentShield -= damage;
-            if (currentShield < 0)
-            {
-                currentShield = 0;
-            }
-        }
-        else
-        {
-            currentHealth -= damage;
-        }
+            
+            base.Update();
 
-        if (currentHealth <= 0)
+            PerformChargeAttack();
+            //PerformBulletAttack();
+            //PerformLaserAttack();
+        }
+       
+    }
+
+    private void PerformLaserAttack()
+    {
+        timeSinceLastLaser += Time.deltaTime;
+        if (timeSinceLastLaser >= laserInterval)
+        {
+            // Shoot the laser
+            GameObject laser = Instantiate(laserPrefab, transform.position, Quaternion.identity);
+            Laser laserScript = laser.GetComponent<Laser>();
+            laserScript.SetDamage(target.GetComponent<IDamageable>(), laserDamage); // Pass target and laser damage
+            laser.GetComponent<Rigidbody2D>().velocity = Vector2.up * laserSpeed;
+
+            // Destroy the laser after a certain duration
+            Destroy(laser, laserDuration);
+
+            timeSinceLastLaser = 0f;
+        }
+    }
+
+
+    public override void GetDamage(float damage)
+    {
+        health.DeductHealth(damage);
+        if (health.GetHealth() <= 0)
         {
             Die();
         }
     }
 
-    private void Die()
+    public override void Die()
     {
-        // Perform actions when the boss dies
-        // For example, destroy the boss GameObject and show a victory screen
-        Destroy(gameObject);
+        base.Die();
+        Debug.Log("CONGRATS!");
     }
 }

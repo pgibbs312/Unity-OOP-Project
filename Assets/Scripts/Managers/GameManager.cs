@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
     [SerializeField] GameObject enemyPrefab;
+    [SerializeField] GameObject enemyBossPrefab;
     [SerializeField] Transform[] spawnPositions;
     [SerializeField] Player playerPrefab;
     private GameObject tempEnemy;
@@ -24,7 +25,9 @@ public class GameManager : MonoBehaviour
 
     bool isPlaying;
 
-    
+    private bool spawnBoss = false;
+    private bool bossSpawned = false;
+    public int meleeEnemyDeathCounter;
     void Awake()
     {
         SetSingleton();
@@ -34,14 +37,13 @@ public class GameManager : MonoBehaviour
     {
         isEnemySpawning = true;
         FindPlayer();
-        //StartCoroutine(EnemySpawner());
-        //Start
+        StartCoroutine(EnemySpawner());
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        SpawnBoss();
     }
     public static GameManager GetInstance()
     {
@@ -70,26 +72,55 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // void CreateEnemy()
-    // {
-    //     tempEnemy = Instantiate(enemyPrefab);
-    //     tempEnemy.transform.position = spawnPositions[UnityEngine.Random.Range(0, spawnPositions.Length)].position;
-    //     tempEnemy.GetComponent<Enemy>().weapon = meleeWeapon;
-    //     tempEnemy.GetComponent<MeleeEnemy>().SetMeleeEnemy(2, 0.25f);
-    // }
+    void CreateEnemy()
+    {
+        tempEnemy = Instantiate(enemyPrefab);
+        tempEnemy.transform.position = spawnPositions[UnityEngine.Random.Range(0, spawnPositions.Length)].position;
+        tempEnemy.GetComponent<Enemy>().weapon = meleeWeapon;
+        tempEnemy.GetComponent<MeleeEnemy>().SetMeleeEnemy(2, 0.25f);
 
-    // IEnumerator EnemySpawner()
-    // {
-    //     while (isEnemySpawning)
-    //     {
-    //         yield return new WaitForSeconds(1.0f / enemySpawnRate);
-    //         CreateEnemy();
-    //     }
-    // }
+        if (spawnBoss)
+        {
+            tempEnemy = Instantiate(enemyBossPrefab);
+            tempEnemy.transform.position = spawnPositions[UnityEngine.Random.Range(0, spawnPositions.Length)].position;
+            //tempEnemy.GetComponent<Enemy>().weapon = meleeWeapon;
+            //tempEnemy.GetComponent<MeleeEnemy>().SetMeleeEnemy(2, 0.25f);
+            spawnBoss = false;
+            tempEnemy.GetComponent<Enemy>().SetEnemyType(EnemyType.BossEnemy);
+        }
+        else
+        {
+            tempEnemy = Instantiate(enemyPrefab);
+            tempEnemy.transform.position = spawnPositions[UnityEngine.Random.Range(0, spawnPositions.Length)].position;
+            tempEnemy.GetComponent<Enemy>().weapon = meleeWeapon;
+            tempEnemy.GetComponent<MeleeEnemy>().SetMeleeEnemy(2, 0.25f);
+            tempEnemy.GetComponent<Enemy>().SetEnemyType(EnemyType.Melee);
+        }
+    }
+
+    IEnumerator EnemySpawner()
+    {
+        while (isEnemySpawning)
+        {
+            yield return new WaitForSeconds(1.0f / enemySpawnRate);
+            CreateEnemy();
+
+        }
+    }
 
     public void NotifyDeath(Enemy enemy)
     {
         pickUpSpawner.SpawnPickup(enemy.transform.position);
+
+        if (enemy.GetEnemyType() == EnemyType.Melee)
+        {
+            meleeEnemyDeathCounter++;
+        }
+
+        if(enemy.GetEnemyType() == EnemyType.BossEnemy)
+        {
+
+        }
     }
 
     public Player GetPlayer()
@@ -118,7 +149,7 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(2);
         isEnemySpawning = true;
-        //StartCoroutine(EnemySpawner());
+        StartCoroutine(EnemySpawner());
     }
 
     public void StopGame()
@@ -146,5 +177,15 @@ public class GameManager : MonoBehaviour
         }
 
         OnGameEnd?.Invoke();
+    }
+
+    private void SpawnBoss()
+    {
+        if (meleeEnemyDeathCounter >= 20 && !bossSpawned)
+        {
+            spawnBoss = true;
+            bossSpawned = true;
+            meleeEnemyDeathCounter = 0;
+        }
     }
 }

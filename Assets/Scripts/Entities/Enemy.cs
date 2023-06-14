@@ -9,20 +9,32 @@ public class Enemy : PlayableObject
     private EnemyType enemyType;
     public GameObject explosion;
     protected Transform target;
-    private waveSpawner spawner;
+    protected Rigidbody2D rb;
+    public AudioClip explosionSound;
+
+
+
+
     [SerializeField] protected float speed; // private are local to the script, protected are local to the script, but can become avaible to any other scripts that are inherited from the class
 
+
+    public EnemyType GetEnemyType()
+    {
+        return enemyType;
+    }
     protected virtual void Start()
     {
-        spawner = GetComponentInParent<waveSpawner>();
         try 
         {
             target = GameObject.FindWithTag("Player").transform; // Find the transfrom of the player
         } catch(NullReferenceException e)
         {
             Debug.Log($"There is no player in the scene {e}");
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
+
+
+        rb = GetComponent<Rigidbody2D>();
     }
 
     protected virtual void Update()
@@ -63,10 +75,32 @@ public class Enemy : PlayableObject
     public override void Die()
     {
         Debug.Log("Enemy Died");
-        Instantiate(explosion, transform.position, Quaternion.identity);
+
+        if (explosion != null)
+        {
+            Instantiate(explosion, transform.position, Quaternion.identity);
+
+            AudioSource explosionAudio = explosion.AddComponent<AudioSource>();
+
+            if (explosionSound != null)
+            {
+                explosionAudio.clip = explosionSound;
+                explosionAudio.Play();
+            }
+            else
+            {
+                Debug.Log("Explosion sound effect not assigned.");
+            }
+        }
+        else
+        {
+            Debug.Log("Explosion GameObject not assigned.");
+        }
+
         GameManager.GetInstance().NotifyDeath(this);
         Destroy(gameObject);
-        spawner.waves[spawner.currentWaveIndex].enemiesLeft--;
+
+
     }
     public override void Attack(float interval)
     {
