@@ -36,6 +36,7 @@ public class UIManager : MonoBehaviour
 
     public void UpdateHealth(float currentHealth)
     {
+        Debug.Log($"Current Health is: {currentHealth}");
         txtHealth.SetText(currentHealth.ToString());
     }
 

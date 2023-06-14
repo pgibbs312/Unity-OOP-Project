@@ -9,7 +9,7 @@ public class EnemyProjectile : MonoBehaviour
     private Vector2 target;   
     [SerializeField] private float damage;
     [SerializeField] private float countDown;
-    private int timer = 0;
+    
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;

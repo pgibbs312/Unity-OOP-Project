@@ -65,7 +65,6 @@ public class Player : PlayableObject
 
     public override void GetDamage(float damage)
     {
-        Debug.Log($"Player took {damage} amount of dmg");
         health.DeductHealth(damage);
 
         //OnHealthUpdate?.Invoke(health.GetHealth());
