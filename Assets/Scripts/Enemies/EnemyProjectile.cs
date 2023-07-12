@@ -22,7 +22,7 @@ public class EnemyProjectile : MonoBehaviour
 
     void Update()
     {
-        Vector2 target = new Vector2(player.position.x, player.position.y); //change after player position.y is fixed
+        //Vector2 target = new Vector2(player.position.x, player.position.y);
         transform.position = Vector2.MoveTowards(transform.position, target, speed * Time.deltaTime);
         
         countDown -= Time.deltaTime;
