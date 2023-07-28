@@ -15,6 +15,7 @@ public class Player : PlayableObject
     private Rigidbody2D playerRB;
     public Action OnDeath;
     public HealthPickup healthPickup;
+    Health playerHealth;
     
     // public Action<float> OnHealthUpdate;
     private void Awake()

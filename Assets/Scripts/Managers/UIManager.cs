@@ -31,12 +31,12 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
     }
 
     public void UpdateHealth(float currentHealth)
     {
         txtHealth.SetText(currentHealth.ToString());
+        Debug.Log($"Current health {player.health.GetHealth()}");
     }
 
     public void UpdateScore()
