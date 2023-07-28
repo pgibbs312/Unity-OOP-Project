@@ -6,7 +6,8 @@ public class EnemyProjectile : MonoBehaviour
 {
     public float speed;
     private Transform player;
-    private Vector2 target;   
+    private Vector2 target;
+    private Rigidbody2D projectileRB;
     [SerializeField] private float damage;
     [SerializeField] private float countDown;
     private int timer = 0;
@@ -14,6 +15,7 @@ public class EnemyProjectile : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         target = new Vector2(player.position.x, player.position.y);
+        projectileRB = GetComponent<Rigidbody2D>();
         gameObject.transform.eulerAngles = new Vector3(
             gameObject.transform.eulerAngles.x, 
             gameObject.transform.eulerAngles.y + 180, 
