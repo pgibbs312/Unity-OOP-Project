@@ -22,16 +22,23 @@ public class Health
         maxHealth = _maxHealth;
         healthRegenerated = _healthRegenerated;
         currentHealth = _currentHealth;
-        Debug.Log($"Health... {currentHealth}");
         OnHealthUpdate?.Invoke(currentHealth);
     }
     public void RegenHealth()
     {
-        AddHealth(healthRegenerated * Time.deltaTime);
+        //AddHealth(healthRegenerated * Time.deltaTime);
     }
     public void AddHealth(float value)
     {
-        currentHealth = Mathf.Min(currentHealth, currentHealth + value); // give us the maximum value possible
+        currentHealth = GetHealth();
+        Debug.Log($"current health: {currentHealth}, value: {value}");
+        // currentHealth = Mathf.Min(currentHealth, currentHealth + value); // give us the maximum value possible
+        if (currentHealth + value < maxHealth)
+        {
+            currentHealth = currentHealth + value; 
+        } else {
+            currentHealth = maxHealth;
+        }
         OnHealthUpdate?.Invoke(currentHealth);
     }
     public void DeductHealth(float value)

@@ -36,7 +36,6 @@ public class Player : PlayableObject
     private void Update()
     {
         health.RegenHealth();
-        Debug.Log($"Test Health = {health.GetHealth()}");
         txtHealth.SetText(health.GetHealth().ToString());
     }
     // public void GetHealth()
@@ -59,7 +58,6 @@ public class Player : PlayableObject
 
     public override void Shoot()
     {
-        Debug.Log("Shooting bullets towards direction");
         weapon.Shoot(bulletprefab, this, "Enemy");
     }
     public override void Die()

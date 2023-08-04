@@ -8,15 +8,19 @@ public class SuppressedFireProjectile : MonoBehaviour
     [SerializeField] float damage;
     [SerializeField] float countDown;
     [SerializeField] Transform ship;
-    Rigidbody2D rigidbody;
+    private Vector2 target;
+    private Transform player;
 
     void Start()
     {
-        rigidbody = GetComponent<Rigidbody2D>();
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        target = new Vector2(player.position.x, player.position.y);
+        Debug.Log($"player position: {target}");
     }
     void Update()
     {
-        rigidbody.AddForce(ship.forward * speed);
+        transform.Translate(target * speed * Time.deltaTime);
+
         Destroy(gameObject, 5f);
     }
 

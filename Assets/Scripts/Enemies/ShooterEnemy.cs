@@ -8,6 +8,7 @@ public class ShooterEnemy : Enemy
     [SerializeField] float attackTime;
     [SerializeField] float damage;
     [SerializeField] GameObject projectile;
+    [SerializeField] float offset;
     private float timer = 0;
     
     public void SetShooterEnemy(float _attackRange, float _attackTime)
@@ -46,7 +47,7 @@ public class ShooterEnemy : Enemy
         transform.rotation = Quaternion.Euler(0, 0, (angle - 60));
         if (Vector2.Distance(transform.position, target.position) > attackRange)
         {
-            transform.Translate(Vector2.right * speed * Time.deltaTime);
+           transform.Translate(Vector2.right * speed * Time.deltaTime);
         } 
     }
     public override void Attack(float interval)

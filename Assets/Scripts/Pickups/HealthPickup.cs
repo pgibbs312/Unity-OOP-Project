@@ -17,11 +17,9 @@ public class HealthPickup : Pickup, IDamageable
         float health = Random.Range(healthMin, healthMax);
         var player = GameManager.GetInstance().GetPlayer();
         player.health.AddHealth(health);
-        Debug.Log($"Health added: {health}");
     }
     public void OnTriggerEnter2D(Collider2D col)
     {
-        Debug.Log("On trigger called");
         if (col.gameObject.CompareTag("Player"))
         {
             Debug.Log("On trigger health");
