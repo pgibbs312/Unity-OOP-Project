@@ -35,8 +35,8 @@ public class UIManager : MonoBehaviour
 
     public void UpdateHealth(float currentHealth)
     {
-        txtHealth.SetText(currentHealth.ToString());
-        Debug.Log($"Current health {player.health.GetHealth()}");
+        // txtHealth.SetText(currentHealth.ToString());
+        // Debug.Log($"Current health {player.health.GetHealth()}");
     }
 
     public void UpdateScore()

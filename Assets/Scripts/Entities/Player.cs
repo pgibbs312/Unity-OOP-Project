@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using System;
 
 public class Player : PlayableObject
@@ -11,10 +12,12 @@ public class Player : PlayableObject
 
     [SerializeField] private float weaponDamage = 1;
     [SerializeField] private float bulletSpeed = 10;
+    [SerializeField] TMP_Text txtHealth;
     [SerializeField] Bullet bulletprefab;
     private Rigidbody2D playerRB;
     public Action OnDeath;
     public HealthPickup healthPickup;
+    public float currentHealth;
     Health playerHealth;
     
     // public Action<float> OnHealthUpdate;
@@ -33,7 +36,14 @@ public class Player : PlayableObject
     private void Update()
     {
         health.RegenHealth();
+        Debug.Log($"Test Health = {health.GetHealth()}");
+        txtHealth.SetText(health.GetHealth().ToString());
     }
+    // public void GetHealth()
+    // {
+    //     currentHealth = health.GetHealth();
+    //     return currentHealth;
+    // }
 
     // method below is an example of run time polymorphism
     public override void Move(Vector2 direction, Vector2 target)

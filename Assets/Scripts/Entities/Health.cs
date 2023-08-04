@@ -17,16 +17,12 @@ public class Health
     {
 
     }
-    void Update()
-    {
-        Debug.Log($"Health!!!!!! {GetHealth()}");
-    }
     public Health(float _maxHealth, float _healthRegenerated, float _currentHealth = 100f)
     {
         maxHealth = _maxHealth;
         healthRegenerated = _healthRegenerated;
         currentHealth = _currentHealth;
-
+        Debug.Log($"Health... {currentHealth}");
         OnHealthUpdate?.Invoke(currentHealth);
     }
     public void RegenHealth()

@@ -42,12 +42,11 @@ public class MachineGunEnemy : Enemy
 
         // define rotation
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0, 0, angle);
+        transform.rotation = Quaternion.Euler(0, 0, (angle - 60));
         if (Vector2.Distance(transform.position, target.position) > attackRange)
         {
             transform.Translate(Vector2.right * speed * Time.deltaTime);
         } 
-            
     }
 
     public override void Attack(float interval)
@@ -59,7 +58,6 @@ public class MachineGunEnemy : Enemy
         {
             timer = 0;
             Instantiate(projectile, transform.position, Quaternion.identity);
-            Debug.Log("MachineGun Shot");
         }   
     }
 }
