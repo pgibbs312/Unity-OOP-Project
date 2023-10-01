@@ -18,12 +18,12 @@ public class Player : PlayableObject
     public Action OnDeath;
     public HealthPickup healthPickup;
     public float currentHealth;
-    Health playerHealth;
+
     
     // public Action<float> OnHealthUpdate;
     private void Awake()
     {
-        health = new Health(100, 0.5f, 100);
+        health = new Health(100, 0.5f, 50);
         playerRB = GetComponent<Rigidbody2D>();
 
         weapon = new Weapon("Player Weapon", weaponDamage, bulletSpeed);
@@ -36,7 +36,7 @@ public class Player : PlayableObject
     private void Update()
     {
         health.RegenHealth();
-        txtHealth.SetText(health.GetHealth().ToString());
+        // txtHealth.SetText(health.GetHealth().ToString());
     }
     // public void GetHealth()
     // {

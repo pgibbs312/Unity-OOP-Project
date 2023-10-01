@@ -103,7 +103,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2340040905487055211
 Transform:
   m_ObjectHideFlags: 0
@@ -136,8 +136,10 @@ MonoBehaviour:
   cam: {fileID: 0}
   weaponDamage: 1
   bulletSpeed: 10
+  txtHealth: {fileID: 0}
   bulletprefab: {fileID: 4666597185586802376, guid: 9a6138645a9e449abada7edc6e21aa05, type: 3}
   healthPickup: {fileID: 0}
+  currentHealth: 0
 --- !u!114 &2340040905487055210
 MonoBehaviour:
   m_ObjectHideFlags: 0

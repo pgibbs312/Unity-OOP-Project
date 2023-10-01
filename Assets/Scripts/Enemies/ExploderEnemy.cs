@@ -2,17 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ExploderEnemy : MonoBehaviour
+public class ExploderEnemy : Enemy
 {
+    [SerializeField] float damage;
+
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
-        
+        base.Start();
+        health = new Health(1, 0, 1);
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
-        
+        base.Update();
+        if (target == null)
+        {
+            return;
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            other.GetComponent<IDamageable>().GetDamage(damage);
+            Die();
+        }
     }
 }

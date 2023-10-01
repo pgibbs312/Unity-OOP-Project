@@ -8,7 +8,7 @@ public class Enemy : PlayableObject
     //private float speed;
     private EnemyType enemyType;
     public GameObject explosion;
-    protected Transform target;
+    public Transform target;
     private waveSpawner spawner;
     [SerializeField] protected float speed; // private are local to the script, protected are local to the script, but can become avaible to any other scripts that are inherited from the class
 

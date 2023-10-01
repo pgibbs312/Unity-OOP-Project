@@ -147,8 +147,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosion: {fileID: 2077628506125916678, guid: 7b560000e6f0d4ed0b787b94a38b8c48, type: 3}
+  target: {fileID: 0}
   speed: 0.5
   attackRange: 5
   attackTime: 1
   damage: 1
   projectile: {fileID: 5101975065626970366, guid: 94dbeb898df374591a6eedce50c5d800, type: 3}
+  player: {fileID: 2340040905487055211, guid: 55d02f2cc0e9941d68d219ffbf72fbd4, type: 3}

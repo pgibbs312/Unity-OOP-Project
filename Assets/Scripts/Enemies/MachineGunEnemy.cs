@@ -8,7 +8,9 @@ public class MachineGunEnemy : Enemy
     [SerializeField] float attackTime;
     [SerializeField] float damage;
     [SerializeField] private GameObject projectile;
+    [SerializeField] Transform player;
     private float timer = 0;
+    Color color = new Color(255, 68, 0);
     // Start is called before the first frame update
     public void SetMachineGunEnemy(float _attackRange, float _attackTime)
     {
@@ -32,6 +34,11 @@ public class MachineGunEnemy : Enemy
         {
             Attack(attackTime);
         }
+
+        Vector2 lineTarget = new Vector2(player.position.x, player.position.y);
+        Debug.DrawLine(new Vector2(transform.position.x, transform.position.y), lineTarget, color);
+
+        
     }
 
     public override void Move(Vector2 direction)

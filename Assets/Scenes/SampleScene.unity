@@ -712,15 +712,8 @@ MonoBehaviour:
   waves:
   - enemies:
     - {fileID: 9089661425770999092, guid: df63f9fa8ea2b4f8ca5c49c10acb36b5, type: 3}
-    - {fileID: 9089661425770999092, guid: df63f9fa8ea2b4f8ca5c49c10acb36b5, type: 3}
-    timeToNextEnemy: 2
-    timeToNextWave: 1
-    enemiesLeft: 0
-  - enemies:
-    - {fileID: 8061909661394062822, guid: cb7190a3bcddd4c3b83bff287f67113e, type: 3}
-    - {fileID: 8061909661394062822, guid: cb7190a3bcddd4c3b83bff287f67113e, type: 3}
     - {fileID: 8325786420288845163, guid: f2003f58327024fd485dd9d5adbd475a, type: 3}
-    - {fileID: 8325786420288845163, guid: f2003f58327024fd485dd9d5adbd475a, type: 3}
+    - {fileID: 2175773140785461332, guid: bb7bf3868e81649529e2a7c4ccee8a24, type: 3}
     timeToNextEnemy: 2
     timeToNextWave: 1
     enemiesLeft: 0

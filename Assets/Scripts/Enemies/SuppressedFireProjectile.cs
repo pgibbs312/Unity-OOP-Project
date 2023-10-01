@@ -19,8 +19,8 @@ public class SuppressedFireProjectile : MonoBehaviour
     }
     void Update()
     {
-        transform.Translate(target * speed * Time.deltaTime);
-
+        // transform.Translate(target * speed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, target, speed * Time.deltaTime);
         Destroy(gameObject, 5f);
     }
 

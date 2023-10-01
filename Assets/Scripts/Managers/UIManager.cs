@@ -18,7 +18,6 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         scoreManager = GameManager.GetInstance().scoreManager;
-        //player.health.OnHealthUpdate += UpdateHealth;
         GameManager.GetInstance().OnGameStart += GameStarted;
         GameManager.GetInstance().OnGameEnd += GameOver;
     }
@@ -35,8 +34,7 @@ public class UIManager : MonoBehaviour
 
     public void UpdateHealth(float currentHealth)
     {
-        // txtHealth.SetText(currentHealth.ToString());
-        // Debug.Log($"Current health {player.health.GetHealth()}");
+        txtHealth.SetText(currentHealth.ToString());
     }
 
     public void UpdateScore()

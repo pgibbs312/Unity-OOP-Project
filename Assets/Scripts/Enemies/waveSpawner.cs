@@ -60,8 +60,9 @@ public class waveSpawner : MonoBehaviour
             for (int i = 0; i < waves[currentWaveIndex].enemies.Length; i++)
             {
                 randomNumber = Random.Range(0, spawnPoints.Length);
-                Enemy enemy = Instantiate(waves[currentWaveIndex].enemies[i], spawnPoints[randomNumber].transform);
-                enemy.transform.SetParent(spawnPoint.transform);
+                Enemy enemy = Instantiate(waves[currentWaveIndex].enemies[i], spawnPoints[randomNumber].transform.position, spawnPoints[randomNumber].transform.rotation);
+                //Debug.Log($"Shooter Enemy rotation: {enemy.transform.rotation}");
+                //enemy.transform.SetParent(spawnPoint.transform);
                 yield return new WaitForSeconds(waves[currentWaveIndex].timeToNextEnemy);
             }
         }

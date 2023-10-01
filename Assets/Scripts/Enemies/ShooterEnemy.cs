@@ -9,6 +9,8 @@ public class ShooterEnemy : Enemy
     [SerializeField] float damage;
     [SerializeField] GameObject projectile;
     [SerializeField] float offset;
+    [SerializeField] Transform player;
+    Color color = new Color(255, 68, 0);
     private float timer = 0;
     
     public void SetShooterEnemy(float _attackRange, float _attackTime)
@@ -34,6 +36,8 @@ public class ShooterEnemy : Enemy
         {
             Attack(attackTime);
         }
+        Vector2 lineTarget = new Vector2(player.position.x, player.position.y);
+        Debug.DrawLine(new Vector2(transform.position.x, transform.position.y), lineTarget, color);
     }
 
     public override void Move(Vector2 direction)
