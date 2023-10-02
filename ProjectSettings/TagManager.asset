@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - HealthPickup
+  - Spawner
   layers:
   - Default
   - TransparentFX

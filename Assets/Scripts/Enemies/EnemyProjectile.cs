@@ -34,6 +34,8 @@ public class EnemyProjectile : MonoBehaviour
             countDown = 0;
             Destroy(gameObject);
         }
+        if (transform.position.y >= target.y)
+            DestroyProjectile();
     }
 
     void OnTriggerEnter2D(Collider2D col)

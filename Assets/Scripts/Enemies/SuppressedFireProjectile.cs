@@ -21,7 +21,7 @@ public class SuppressedFireProjectile : MonoBehaviour
     {
         // transform.Translate(target * speed * Time.deltaTime);
         transform.position = Vector2.MoveTowards(transform.position, target, speed * Time.deltaTime);
-        Destroy(gameObject, 5f);
+        Destroy(gameObject, 2f);
     }
 
     void OnTriggerEnter2D(Collider2D col)

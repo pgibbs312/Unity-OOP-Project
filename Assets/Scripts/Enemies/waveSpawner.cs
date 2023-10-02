@@ -8,6 +8,7 @@ public class waveSpawner : MonoBehaviour
 {
     [SerializeField] private float countDown;
     [SerializeField] private Text waveText;
+    [SerializeField] GameManager gameManager;
     
     public GameObject spawnPoint;
     public GameObject[] spawnPoints;
@@ -33,6 +34,7 @@ public class waveSpawner : MonoBehaviour
         if (currentWaveIndex >= waves.Length)
         {
             Debug.Log("You survived every wave!");
+            gameManager.StopGame();
             return;
         }
         waveText.text = waveIndexText.ToString();

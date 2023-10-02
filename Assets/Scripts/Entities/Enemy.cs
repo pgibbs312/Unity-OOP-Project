@@ -11,10 +11,15 @@ public class Enemy : PlayableObject
     public Transform target;
     private waveSpawner spawner;
     [SerializeField] protected float speed; // private are local to the script, protected are local to the script, but can become avaible to any other scripts that are inherited from the class
+    Player thePlayer;
 
+    void Awake()
+    {
+        thePlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+    }
     protected virtual void Start()
     {
-        spawner = GetComponentInParent<waveSpawner>();
+        spawner = GameObject.FindGameObjectWithTag("Spawner").GetComponent<waveSpawner>();
         try 
         {
             target = GameObject.FindWithTag("Player").transform; // Find the transfrom of the player
@@ -65,9 +70,11 @@ public class Enemy : PlayableObject
         Debug.Log("Enemy Died");
         Instantiate(explosion, transform.position, Quaternion.identity);
         GameManager.GetInstance().NotifyDeath(this);
-        Destroy(gameObject);
         spawner.waves[spawner.currentWaveIndex].enemiesLeft--;
+        thePlayer.deathSFX.Play();
+        Destroy(gameObject);
     }
+
     public override void Attack(float interval)
     {
      

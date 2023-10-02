@@ -14,10 +14,15 @@ public class Player : PlayableObject
     [SerializeField] private float bulletSpeed = 10;
     [SerializeField] TMP_Text txtHealth;
     [SerializeField] Bullet bulletprefab;
+    public int nukesAvailable = 0;
     private Rigidbody2D playerRB;
     public Action OnDeath;
     public HealthPickup healthPickup;
     public float currentHealth;
+    public float gunBuffedTimer = 0;
+    List<Enemy> enemies = new List<Enemy>();
+    [SerializeField] AudioSource fireSFX;
+    public AudioSource deathSFX;
 
     
     // public Action<float> OnHealthUpdate;
@@ -36,7 +41,29 @@ public class Player : PlayableObject
     private void Update()
     {
         health.RegenHealth();
-        // txtHealth.SetText(health.GetHealth().ToString());
+        
+        if (Input.GetMouseButton(1))
+        {
+            if (nukesAvailable > 0)
+            {
+                for (int i = 0; i < enemies.Count; i++)
+                {
+                    enemies.Remove(enemies[i]);
+                }
+                foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+                {
+                    Enemy _enemy = enemy.GetComponent<Enemy>();
+                    enemies.Add(_enemy);
+                }
+                Debug.Log(enemies.Count);
+                for (int i = 0; i < enemies.Count; i++)
+                {
+                    enemies[i].Die();
+                    enemies.RemoveAt(i);
+                }
+            }
+        }
+        BuffedGunAttack();
     }
     // public void GetHealth()
     // {
@@ -54,11 +81,23 @@ public class Player : PlayableObject
         
         float angle = Mathf.Atan2(target.y, target.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, angle);
-    }   
+    } 
+    void BuffedGunAttack()
+    {
+        if (gunBuffedTimer > 0)
+        {
+            if (Input.GetMouseButton(0))
+            {
+                Shoot();
+            }
+            gunBuffedTimer -= Time.deltaTime;
+        }
+    }  
 
     public override void Shoot()
     {
         weapon.Shoot(bulletprefab, this, "Enemy");
+        fireSFX.Play();
     }
     public override void Die()
     {
@@ -84,5 +123,6 @@ public class Player : PlayableObject
             Die();
         }
     }
+
     
 }
